@@ -63,7 +63,12 @@ body {
 /* Fit the frame: the Labs page sets the frame's height from the content. */
 .layout { height: auto; overflow: visible; }
 .main-content, .sidebar { overflow: visible; }
-#viz-container svg { max-height: none !important; }
+#viz-container svg {
+    max-height: none !important;   /* Daan's 75vh cap fights the frame's resizing */
+    max-width: 860px;              /* keeps the chart a sensible size on wide screens */
+    margin: 0 auto;
+    overflow: visible;             /* Poppins is wider than Inter: let the corner labels show */
+}
 
 /* Two navy panels on the canvas page. */
 .main-content { background: var(--el-navy); }
@@ -133,8 +138,20 @@ body {
 }
 #year-slider::-moz-range-progress { background: var(--el-yellow); height: 4px; }
 
-/* Legend: a canvas panel over the navy chart area, hairline border. */
+/* Legend: a canvas panel in a row below the chart, so it never covers the plot. */
 .chart-legend {
+    position: static !important;
+    transform: none !important;
+    right: auto; top: auto;
+    max-height: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 16px auto 0;
+    box-sizing: border-box;
     background: var(--el-canvas);
     border: 1px solid var(--el-divider);
 }
