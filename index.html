@@ -9,6 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="styles.css">
+    <!-- Ember Labs (Labs fork only): Labs look, frame resizing and usage tracking. After a
+         Sync fork from Daan's repo, check these lines and the two at the end of <body> are still here. -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="labs.css">
+    <script async src="https://cdn.jsdelivr.net/npm/@iframe-resizer/child@5.5.9"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="6190ccfa-b0f2-4ed2-8b40-3faf365e9485" data-domains="ember-labs-org.github.io" data-performance="true"></script>
 </head>
 
 <body>
@@ -101,6 +107,8 @@
 
     <div id="tooltip" class="tooltip"></div>
     <script src="app.js?v=2"></script>
+    <script src="labs.js"></script>
+    <script src="analytics.js"></script>
 </body>
 
 </html>

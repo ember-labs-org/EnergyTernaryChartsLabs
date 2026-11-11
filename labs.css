@@ -1,0 +1,168 @@
+/* Ember Labs overlay for "A Three-Way View of Energy History".
+ *
+ * Loaded after Daan's styles.css, and only in the ember-labs-org fork. It restyles the tool
+ * to the Ember Labs Design System (Rey Dizon's ember-labs-branding skill, v1) without
+ * changing Daan's files, so Sync fork stays clean.
+ *
+ * Colours: Labs tokens only (colour-tokens.md); chart series colours are set in labs.js.
+ * Rules applied: Poppins 400/600 only; sharp corners everywhere; no drop shadows or blur;
+ * every surface contrasts with its parent (canvas page, navy panels); controls are yellow;
+ * nothing the Labs page already provides (the Electrotech banner is hidden); no 100vh
+ * layout, because the Labs page sizes the frame to the content (iframe-resizer).
+ */
+
+:root {
+    --el-navy: #192238;
+    --el-canvas: #414F6F;
+    --el-slate: #626E88;
+    --el-black: #000000;
+    --el-white: #FFFFFF;
+    --el-yellow: #FFC400;
+    --el-yellow-hover: #E6B300;
+    --el-muted: #B0B7C6;
+    --el-white-wash-08: rgba(255, 255, 255, 0.08);
+    --el-white-wash-12: rgba(255, 255, 255, 0.12);
+    --el-divider: rgba(255, 255, 255, 0.12);
+    --el-font: 'Poppins', system-ui, sans-serif;
+
+    /* Daan's grey scale, remapped onto Labs tokens for a dark surface. His code uses these
+       for text, axes and gridlines (light theme: 50 = lightest surface, 900 = darkest text). */
+    --slate-50: var(--el-navy);
+    --slate-100: var(--el-canvas);
+    --slate-200: var(--el-divider);
+    --slate-300: var(--el-slate);
+    --slate-400: var(--el-muted);
+    --slate-500: var(--el-muted);
+    --slate-600: var(--el-muted);
+    --slate-700: var(--el-divider);
+    --slate-800: var(--el-white);
+    --slate-900: var(--el-white);
+    --blue-600: var(--el-yellow);
+}
+
+/* Sharp corners and no shadows or blur, everywhere (rules 3 and 8). */
+*, *::before, *::after {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Page: canvas, Poppins, white text. */
+html, body {
+    background: var(--el-canvas);
+}
+body {
+    font-family: var(--el-font);
+    color: var(--el-white);
+}
+
+/* Nothing the Labs page already provides (rule 7). */
+.top-banner { display: none !important; }
+
+/* Fit the frame: the Labs page sets the frame's height from the content. */
+.layout { height: auto; overflow: visible; }
+.main-content, .sidebar { overflow: visible; }
+#viz-container svg { max-height: none !important; }
+
+/* Two navy panels on the canvas page. */
+.main-content { background: var(--el-navy); }
+.sidebar { background: var(--el-navy); border-left: 1px solid var(--el-divider); }
+
+/* Type: two weights only. */
+.subtitle, .region-item, .axis-tick, .axis-range-label, .tooltip-label { font-weight: 400; }
+.section-label, .toggle-btn, .select-all-btn, .current-year, .speed-btn, .legend-item,
+.axis-label, .tooltip-title, .tooltip-value { font-weight: 600; }
+.subtitle { color: var(--el-muted); }
+.section-label { color: var(--el-muted); letter-spacing: 0.04em; }
+.current-year { color: var(--el-white); }
+
+/* Mutually exclusive options: a Labs button group, active segment solid yellow. */
+.toggle-group {
+    background: none;
+    padding: 0;
+    gap: 0;
+    border: 1px solid var(--el-divider);
+}
+.toggle-btn {
+    color: var(--el-muted);
+    background: none;
+    border-right: 1px solid var(--el-divider);
+}
+.toggle-btn:last-child { border-right: none; }
+.toggle-btn:hover { color: var(--el-white); background: var(--el-white-wash-08); }
+.toggle-btn.active { background: var(--el-yellow); color: var(--el-navy); }
+
+/* Region and country lists. */
+.region-item { color: var(--el-muted); }
+.region-item:hover { background: var(--el-white-wash-08); color: var(--el-white); }
+.region-item.active { background: var(--el-white-wash-12); color: var(--el-white); }
+.color-dot { border-radius: 0; }                        /* square swatches */
+.select-all-btn { color: var(--el-yellow); }
+.regions-list::-webkit-scrollbar-track { background: var(--el-navy); }
+.regions-list::-webkit-scrollbar-thumb { background: var(--el-slate); }
+
+/* Playback: a canvas panel inside the navy sidebar; controls yellow. */
+.playback-controls {
+    background: var(--el-canvas);
+    border: none;
+}
+.play-pause { background: var(--el-yellow); color: var(--el-navy); }
+.play-pause:hover { background: var(--el-yellow-hover); }
+
+.speed-selector { gap: 0; border: 1px solid var(--el-divider); }
+.speed-btn {
+    background: none;
+    color: var(--el-muted);
+    border-right: 1px solid var(--el-divider);
+}
+.speed-btn:last-child { border-right: none; }
+.speed-btn.active { background: var(--el-yellow); color: var(--el-navy); }
+
+/* Year slider: thin muted track, square yellow handle with a thin dark border. */
+#year-slider { height: 4px; background: var(--el-muted); }
+#year-slider::-webkit-slider-thumb {
+    width: 16px; height: 16px;
+    background: var(--el-yellow);
+    border: 2px solid var(--el-navy);
+}
+#year-slider::-moz-range-thumb {
+    width: 16px; height: 16px;
+    background: var(--el-yellow);
+    border: 2px solid var(--el-navy);
+}
+#year-slider::-moz-range-progress { background: var(--el-yellow); height: 4px; }
+
+/* Legend: a canvas panel over the navy chart area, hairline border. */
+.chart-legend {
+    background: var(--el-canvas);
+    border: 1px solid var(--el-divider);
+}
+.legend-item { color: var(--el-white); }
+
+/* Chart: muted axes and gridlines; highlighted axis in white; 2.5px trails. */
+.axis-label { fill: var(--el-white); }
+.axis-label:hover, .axis-label.highlighted { fill: var(--el-yellow); }
+.grid-line.highlighted, .axis-edge.highlighted { stroke: var(--el-white); }
+.axis-tick.highlighted, .axis-range-label.highlighted { fill: var(--el-white); }
+.year-trail { stroke-width: 2.5; opacity: 0.8; }
+.country-point { stroke: var(--el-navy); }
+
+/* Tooltips: system-level black with a hairline border. */
+.tooltip {
+    background: var(--el-black);
+    border: 1px solid var(--el-divider);
+    color: var(--el-white);
+}
+.tooltip-title { border-bottom: 1px solid var(--el-divider); }
+.tooltip-label, .tooltip-source { color: var(--el-muted); }
+
+/* Phones: the playback panel is no longer pinned (it can't stick inside a full-height frame). */
+@media screen and (max-width: 768px) {
+    .playback-controls {
+        position: static;
+        background: var(--el-canvas);
+        border: none;
+    }
+    .chart-legend { background: var(--el-canvas); border: 1px solid var(--el-divider); }
+}
